@@ -14,3 +14,7 @@ O projeto visa identificar e corrigir as cores dos cafés em imagens, usando uma
 ## Tecnologias Utilizadas
 - Python: Linguagem principal para processamento de imagens.
 - YOLO (futuro): Planejamento para detecção automatizada da paleta de cores usando modelos de aprendizado de máquina.
+
+## Observações
+
+- As imagens de Iphone utilizadas para treinamento tiveram que ser convertidas para um formato aceitável (jpg), pois o formato original não era aceito pelo RoboFlow

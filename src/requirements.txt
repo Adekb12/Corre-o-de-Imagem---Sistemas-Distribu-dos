@@ -1,0 +1,6 @@
+numpy
+opencv-python
+Pillow
+matplotlib
+scikit-learn
+roboflow

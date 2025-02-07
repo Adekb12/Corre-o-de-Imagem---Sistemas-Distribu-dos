@@ -1,24 +1,45 @@
-import numpy as np
-from color_correction import correct_color  # Importa a função de correção de cores
+import argparse
+from correct_color import color_correction
+from image_compression import compress_image
+from circle_detection import detect_and_crop_circle
+from palette_detection import detect_and_crop_palette
+from circle_color import get_circle_color
+from palette_color import get_palette_color
+from display_color import display_color
 
 def main(image_path):
-    """
-    Função principal que processa a imagem e retorna a cor corrigida.
-    """
-    # 1. Receber a imagem (simulado com um caminho de arquivo)
     print(f"Processando imagem ...")
 
-    # 2. Enviar a imagem para os modelos
-    circle = detect_circle(image_path)  # Codigo que detecta o círculo
-    palette = extract_palette(image_path)  # Codigo que extrai a paleta de cores
+    compressed_image = compress_image(image_path)
+    if compressed_image is None:
+        print("Erro ao compactar a imagem.")
+        return None
 
-    # 3. Processar o círculo e a paleta
-    target_color = get_target_color(circle)  # Codigo extrai a cor alvo do circulo
-    camera_colors = get_camera_colors(palette)  # Codigo que extrai as cores da paleta
+    cropped_circle = detect_and_crop_circle(image_path)
+    cropped_palette = detect_and_crop_palette(image_path)
 
-    # 4. Aplicar a correção de cores
-    corrected_color = correct_color(camera_colors, target_color) #Retorna a cor corrida
+    if not cropped_circle or not cropped_palette:
+        print("Círculo ou paleta de cores não detectados.")
+        return None
 
-    # 5. Retornar a cor corrigida para o front-end
-    print("Cor corrigida:", corrected_color)
-    return corrected_color.tolist()  # Converte para lista para facilitar o uso no front-end
+    corrected_colors = []
+
+    for circle_img, palette_img in zip(cropped_circle, cropped_palette):
+        circle_color = get_circle_color(circle_img)
+        camera_colors = get_palette_color(palette_img)
+        corrected_color = color_correction(camera_colors, circle_color)
+        corrected_colors.append(corrected_color.tolist())
+
+    print("Cores corrigidas:", corrected_colors)
+
+    for color in corrected_colors:
+        display_color(color)
+
+    return corrected_colors
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Corrigir cores de uma imagem.")
+    parser.add_argument("image_path", type=str, help="Caminho para a imagem a ser processada")
+    args = parser.parse_args()
+    
+    main(args.image_path)

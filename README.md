@@ -70,4 +70,5 @@ meu_servidor/
 
 - **Bruno Henrique Firmino** - [GitHub](https://github.com/Bruno7k) 
 - **Gabriel Furtado Teixeira** - [GitHub](https://github.com/GabrielFTgft) 
-- **Lucas de Castros Nízio** - [GitHub](https://github.com/lucasnizio) 
+- **Lucas de Castros Nízio** - [GitHub](https://github.com/lucasnizio)
+- **Rhuan Campideli** - [GitHub](https://github.com/rhuancborges)

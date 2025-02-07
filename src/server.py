@@ -31,7 +31,6 @@ async def process_image(file: UploadFile = File(...)):
 
     # Enviar a saída do `main.py` para o LLaMA
     prompt = f"O que significa este resultado?\n{process.stdout.strip()}"
-    response = ollama.generate(model = "llama3.2",prompt=prompt)  # Ajuste os tokens conforme necessário
-    print(response["response"])
+    response = ollama.generate(model = "llama3",prompt=prompt)  # Ajuste os tokens conforme necessário
 
     return {"corrected_colors": process.stdout.strip(), "llama_response": response["response"]}

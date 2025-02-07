@@ -1,0 +1,36 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* background-image: url(./assets/cafe.webp);
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-position: center;
+  width: 100vw; */
+  background-color: rgb(132, 148, 125);
+  height: 100vh;
+  width: 100vw;
+}
+.card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(180, 250, 150, 0.493);
+  background-image: url(./assets/cafe.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:20px;
+  h3{
+    width: 70%;
+  }
+}

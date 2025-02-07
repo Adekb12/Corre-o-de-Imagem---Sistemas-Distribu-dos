@@ -27,7 +27,7 @@ def get_circle_color(image):
         y_coords = (center_y + radius * np.sin(angles)).astype(int)
 
         colors = [image_array[y, x] for x, y in zip(x_coords, y_coords) if 0 <= x < width and 0 <= y < height]
-        print(np.mean(colors, axis=0).astype(int))
+        
         if colors:
             return np.mean(colors, axis=0).astype(int)
         else:

@@ -38,7 +38,7 @@ rgb_original = np.array([
     [49, 49, 50]
 ])
 
-def correct_color(rgb_camera, rgb_target):
+def color_correction(rgb_camera, rgb_target):
     """
     Corrige a cor de um pixel com base nas cores da câmera e nas cores originais.
 

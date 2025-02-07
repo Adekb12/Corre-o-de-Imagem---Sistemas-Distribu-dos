@@ -25,7 +25,7 @@ export default function InputFileUpload() {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
-      handleUpload(file); // Chama a função de upload automaticamente após selecionar o arquivo
+      handleUpload(file);
     }
   };
 
@@ -36,12 +36,12 @@ export default function InputFileUpload() {
     }
 
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('file', file);
 
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/upload', {
+      const response = await fetch('http://localhost:8000/process_image/', {
         method: 'POST',
         body: formData,
       });
@@ -51,9 +51,8 @@ export default function InputFileUpload() {
       }
 
       const data = await response.json();
-      setResult(data.corrected_color);
+      setResult(data.corrected_colors);
     } catch (error) {
-      console.error('Erro:', error);
       alert('Ocorreu um erro ao processar a imagem.');
     } finally {
       setLoading(false);
@@ -64,18 +63,12 @@ export default function InputFileUpload() {
     <div>
       <Button
         component="label"
-        role={undefined}
         variant="contained"
-        tabIndex={-1}
         startIcon={<CloudUploadIcon />}
         disabled={loading}
       >
         {loading ? 'Enviando...' : 'Enviar Imagem'}
-        <VisuallyHiddenInput
-          type="file"
-          onChange={handleFileChange}
-          accept="image/*"
-        />
+        <VisuallyHiddenInput type="file" onChange={handleFileChange} accept="image/*" />
       </Button>
       {result && (
         <div style={{ marginTop: '20px' }}>

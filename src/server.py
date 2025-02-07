@@ -5,8 +5,18 @@ import subprocess
 import sys
 from pathlib import Path
 import ollama
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 UPLOAD_FOLDER = Path("uploads")
 UPLOAD_FOLDER.mkdir(exist_ok=True)
 
@@ -29,8 +39,7 @@ async def process_image(file: UploadFile = File(...)):
     if process.returncode != 0:
         return {"error": "Erro ao processar a imagem", "details": process.stderr}
 
-    # Enviar a saída do `main.py` para o LLaMA
     prompt = f"O que significa este resultado?\n{process.stdout.strip()}"
-    response = ollama.generate(model = "llama3",prompt=prompt)  # Ajuste os tokens conforme necessário
-
+    response = ollama.generate(model="llama3", prompt=prompt)
+    
     return {"corrected_colors": process.stdout.strip(), "llama_response": response["response"]}

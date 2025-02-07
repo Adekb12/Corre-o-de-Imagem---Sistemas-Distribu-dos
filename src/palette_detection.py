@@ -1,4 +1,3 @@
-import json
 from roboflow import Roboflow
 from PIL import Image
 

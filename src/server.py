@@ -40,6 +40,8 @@ async def process_image(file: UploadFile = File(...)):
         return {"error": "Erro ao processar a imagem", "details": process.stderr}
 
     prompt = f"O que significa este resultado?\n{process.stdout.strip()}"
-    response = ollama.generate(model="llama3", prompt=prompt, host="http://192.168.1.56:11434")
+    client = ollama.Client(host="http://host.docker.internal:11434")
+    response = client.generate(model="llama3", prompt=prompt)
+
     
     return {"corrected_colors": process.stdout.strip(), "llama_response": response["response"]}

@@ -7,3 +7,4 @@ roboflow
 fastapi
 uvicorn
 python-multipart
+ollama

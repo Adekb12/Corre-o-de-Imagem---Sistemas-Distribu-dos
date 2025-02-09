@@ -3,6 +3,7 @@ import shutil
 import uuid
 import subprocess
 import sys
+import json
 from pathlib import Path
 import ollama
 from fastapi.middleware.cors import CORSMiddleware
@@ -33,15 +34,21 @@ async def process_image(file: UploadFile = File(...)):
     image_path = save_image(file)
 
     process = subprocess.run(
-        [sys.executable, "main.py", str(image_path)], capture_output=True, text=True
+        [sys.executable, "main.py", str(image_path)], 
+        capture_output=True, 
+        text=True
     )
 
     if process.returncode != 0:
         return {"error": "Erro ao processar a imagem", "details": process.stderr}
 
-    prompt = f"O que significa este resultado?\n{process.stdout.strip()}"
-    client = ollama.Client(host="http://host.docker.internal:11434")
+    try:
+        corrected_colors = json.loads(process.stdout.strip())
+    except json.JSONDecodeError:
+        return {"error": "Erro ao processar os dados", "details": process.stdout.strip()}
+
+    prompt = f"Qual o significado das cores corrigidas? {corrected_colors}"
+    client = ollama.Client(host="http://ollama:11434")
     response = client.generate(model="llama3", prompt=prompt)
 
-    
-    return {"corrected_colors": process.stdout.strip(), "llama_response": response["response"]}
+    return {"corrected_colors": corrected_colors, "llama_response": response["response"]}

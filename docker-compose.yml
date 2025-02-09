@@ -1,30 +1,43 @@
-version: '3.8'
+version: "3.8"
 
 services:
   ollama:
-    image: ollama/ollama:latest  # Usa a imagem oficial do Ollama
+    image: ollama/ollama:latest
     container_name: ollama
-    restart: always  # Reinicia automaticamente se o contêiner parar
+    restart: always
     ports:
-      - "11434:11434"  # Expondo a porta padrão do Ollama
+      - "11434:11434"
     volumes:
-      - ollama_data:/root/.ollama  # Persistindo os modelos baixados
+      - ollama_data:/root/.ollama
+    networks:
+      - mynetwork
 
   backend:
     build: ./src
     container_name: backend
+    restart: always
     ports:
       - "8000:8000"
+    environment:
+      OLLAMA_URL: http://ollama:11434/
     depends_on:
-      - ollama  # Garante que o Ollama inicie antes do backend
+      - ollama
+    networks:
+      - mynetwork
 
   frontend:
     build: ./web
     container_name: frontend
+    restart: always
     ports:
-      - "3000:3000"
+      - "3000:80"
     depends_on:
       - backend
+    networks:
+      - mynetwork
 
 volumes:
-  ollama_data:  # Volume para armazenar modelos do Ollama
+  ollama_data:
+
+networks:
+  mynetwork:

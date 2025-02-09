@@ -5,7 +5,7 @@ from circle_detection import detect_and_crop_circle
 from palette_detection import detect_and_crop_palette
 from circle_color import get_circle_color
 from palette_color import get_palette_color
-import json
+from display_color import display_color
 
 def main(image_path):
     print(f"Processando imagem ...")
@@ -30,6 +30,16 @@ def main(image_path):
         corrected_color = color_correction(camera_colors, circle_color)
         corrected_colors.append(corrected_color.tolist())
 
-    print(json.dumps(corrected_colors))
+    print("Cores corrigidas:", corrected_colors)
+
+    for color in corrected_colors:
+        display_color(color)
 
     return corrected_colors
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Corrigir cores de uma imagem.")
+    parser.add_argument("image_path", type=str, help="Caminho para a imagem a ser processada")
+    args = parser.parse_args()
+    
+    main(args.image_path)

@@ -18,10 +18,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(180, 250, 150, 0.493);
-  background-image: url(./assets/cafe.webp);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: rgb(132, 148, 125);
   border-radius: 10px;
   width: 500px;
   height: 500px;

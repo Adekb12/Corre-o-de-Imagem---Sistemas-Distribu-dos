@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   ollama:
-    image: ollama/ollama:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: ollama
     restart: always
     ports:
@@ -22,15 +24,13 @@ services:
       OLLAMA_URL: http://ollama:11434/
     depends_on:
       ollama:
-        condition: service_healthy
+        condition: service_started
     networks:
       - mynetwork
     entrypoint: >
       sh -c "
       echo 'Aguardando Ollama...';
       until curl -s http://ollama:11434/api/tags; do sleep 5; done;
-      echo 'Baixando modelo llama3...';
-      ollama pull llama3;
       echo 'Iniciando backend...';
       exec uvicorn server:app --host 0.0.0.0 --port 8000
       "

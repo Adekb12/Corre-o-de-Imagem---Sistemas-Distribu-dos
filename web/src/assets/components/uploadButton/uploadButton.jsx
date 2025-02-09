@@ -2,6 +2,7 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useState } from 'react';
 
 const VisuallyHiddenInput = styled('input')({
@@ -19,6 +20,7 @@ const VisuallyHiddenInput = styled('input')({
 export default function InputFileUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [result, setResult] = useState(null);
+  const [llamaResponse, setLlamaResponse] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event) => {
@@ -52,6 +54,7 @@ export default function InputFileUpload() {
 
       const data = await response.json();
       setResult(data.corrected_colors);
+      setLlamaResponse(data.llama_response);
     } catch (error) {
       alert('Ocorreu um erro ao processar a imagem.');
     } finally {
@@ -60,7 +63,7 @@ export default function InputFileUpload() {
   };
 
   return (
-    <div>
+    <div style={{ textAlign: 'center', padding: '20px' }}>
       <Button
         component="label"
         variant="contained"
@@ -70,10 +73,20 @@ export default function InputFileUpload() {
         {loading ? 'Enviando...' : 'Enviar Imagem'}
         <VisuallyHiddenInput type="file" onChange={handleFileChange} accept="image/*" />
       </Button>
-      {result && (
+
+      {loading && (
+        <div style={{ marginTop: '20px' }}>
+          <CircularProgress />
+          <p>Processando imagem...</p>
+        </div>
+      )}
+
+      {!loading && result && (
         <div style={{ marginTop: '20px' }}>
           <h3>Cor Corrigida:</h3>
           <p>{JSON.stringify(result)}</p>
+          <h3>Resposta do Llama:</h3>
+          <p>{llamaResponse}</p>
         </div>
       )}
     </div>

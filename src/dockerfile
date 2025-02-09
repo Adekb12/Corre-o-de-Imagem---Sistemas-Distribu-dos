@@ -1,10 +1,22 @@
+# Usa a imagem oficial do Python
 FROM python:3.13.1
+
+# Define o diretório de trabalho
 WORKDIR /app
+
+# Copia os arquivos para o container
 COPY . .
+
+# Instala dependências adicionais do sistema e do Python
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
+
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Expõe a porta da API
 EXPOSE 8000
+
+# Define o comando padrão de inicialização
 CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -21,9 +21,19 @@ services:
     environment:
       OLLAMA_URL: http://ollama:11434/
     depends_on:
-      - ollama
+      ollama:
+        condition: service_healthy
     networks:
       - mynetwork
+    entrypoint: >
+      sh -c "
+      echo 'Aguardando Ollama...';
+      until curl -s http://ollama:11434/api/tags; do sleep 5; done;
+      echo 'Baixando modelo llama3...';
+      ollama pull llama3;
+      echo 'Iniciando backend...';
+      exec uvicorn server:app --host 0.0.0.0 --port 8000
+      "
 
   frontend:
     build: ./web
@@ -32,7 +42,8 @@ services:
     ports:
       - "3000:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_started
     networks:
       - mynetwork
 

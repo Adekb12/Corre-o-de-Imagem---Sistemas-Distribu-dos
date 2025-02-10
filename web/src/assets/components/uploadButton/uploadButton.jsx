@@ -82,7 +82,7 @@ export default function InputFileUpload() {
       )}
 
       {!loading && result && (
-        <div style={{ marginTop: '20px' }}>
+        <div style={{ marginTop: '20px', textAlign:"center" , display: "flex", flexDirection: "column", alignItems: "center" }}>
           <h3>Cor Corrigida:</h3>
           <p>{JSON.stringify(result)}</p>
           <h3>Resposta do Llama:</h3>

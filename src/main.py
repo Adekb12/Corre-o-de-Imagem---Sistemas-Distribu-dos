@@ -8,8 +8,6 @@ from palette_color import get_palette_color
 from display_color import display_color
 
 def main(image_path):
-    print(f"Processando imagem ...")
-
     compressed_image = compress_image(image_path)
     if compressed_image is None:
         print("Erro ao compactar a imagem.")
@@ -30,7 +28,7 @@ def main(image_path):
         corrected_color = color_correction(camera_colors, circle_color)
         corrected_colors.append(corrected_color.tolist())
 
-    print("Cores corrigidas:", corrected_colors)
+    print(corrected_colors)
 
     for color in corrected_colors:
         display_color(color)

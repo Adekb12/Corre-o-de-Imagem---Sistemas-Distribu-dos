@@ -40,27 +40,22 @@ def color_correction(rgb_camera, rgb_target):
     Retorna:
         np.array: Cor corrigida (1 x 3).
     """
-    # Ajustando um modelo de regressão linear para cada canal (R, G, B)
+
     model_r = LinearRegression()
     model_g = LinearRegression()
     model_b = LinearRegression()
 
-    # Treinando os modelos
     model_r.fit(rgb_camera, rgb_original[:, 0])
     model_g.fit(rgb_camera, rgb_original[:, 1])
     model_b.fit(rgb_camera, rgb_original[:, 2])
 
-    # Função para corrigir as cores usando os modelos treinados
     def apply_correction(rgb):
         r = model_r.predict(rgb)
         g = model_g.predict(rgb)
         b = model_b.predict(rgb)
         return np.column_stack((r, g, b))
 
-    # Aplicando a correção de cores para a cor target
     corrected_rgb_target = apply_correction(rgb_target.reshape(1, -1))
-
-    # Garantir que os valores de cor estejam no intervalo [0, 255]
     corrected_rgb_target = np.clip(corrected_rgb_target, 0, 255).astype(int)
 
-    return corrected_rgb_target[0]  # Retorna a cor corrigida como um array 1D
+    return corrected_rgb_target[0]

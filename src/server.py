@@ -42,7 +42,5 @@ async def process_image(file: UploadFile = File(...)):
     prompt = f"Execute o comando e extraia apenas os valores RGB finais que representam a cor corrigida do café. Ignore qualquer outro texto ou log. Os valores estarão no formato [R,G,B] e aparecerão após a frase cor_corrigida. Retorne apenas esses números e explique que eles representam a cor do café após todo o processo de correção de cor. Além disso, mencione que essa cor pode ser usada para definir o ponto do café.\n{process.stdout.strip()}"
     client = ollama.Client(host="http://host.docker.internal:11434")
     response = client.generate(model="llama3", prompt=prompt)
-    print(response)
-
     
     return {"corrected_colors": process.stdout.strip(), "llama_response": response["response"]}

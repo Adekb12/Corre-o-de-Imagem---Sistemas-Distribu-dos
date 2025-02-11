@@ -15,4 +15,4 @@ Este projeto tem como objetivo corrigir as cores de uma imagem com base em uma p
 - **Bruno Henrique Firmino** - [GitHub](https://github.com/Bruno7k) 
 - **Gabriel Furtado Teixeira** - [GitHub](https://github.com/GabrielFTgft) 
 - **Lucas de Castros Nízio** - [GitHub](https://github.com/lucasnizio)
-- **Rhuan Campideli** - [GitHub](https://github.com/rhuancborges)
+- **Rhuan Campideli Borges** - [GitHub](https://github.com/rhuancborges)

@@ -5,7 +5,6 @@ from circle_detection import detect_and_crop_circle
 from palette_detection import detect_and_crop_palette
 from circle_color import get_circle_color
 from palette_color import get_palette_color
-from display_color import display_color
 
 def main(image_path):
     compressed_image = compress_image(image_path)
@@ -29,9 +28,6 @@ def main(image_path):
         corrected_colors.append(corrected_color.tolist())
 
     print(corrected_colors)
-
-    for color in corrected_colors:
-        display_color(color)
 
     return corrected_colors
 
